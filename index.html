@@ -1,224 +1,1358 @@
-<script>
-  /*
-    =====================================================
-    Adult Select Lab 商品カード設定
-    =====================================================
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    重要：
-    下の DMM_MAIN_LINK に、あなたのDMM/FANZAアフィリエイトリンクを入れてください。
+  <title>Adult Select Lab | 大人向けコンテンツを、失敗しにくく選ぶ。</title>
+  <meta name="description" content="Adult Select Labは、大人向けコンテンツを無料サンプル・ジャンル・セール情報・独自スコアで比較できる案内サイトです。" />
+  <meta name="robots" content="index, follow" />
 
-    まだ正式リンクがない場合でも、このコードなら example.com には飛びません。
-    リンク未設定時はクリックしても案内だけ出ます。
-  */
-
-  const DMM_MAIN_LINK = ""; 
-  // 例：
-  // const DMM_MAIN_LINK = "ここにあなたのDMM/FANZAアフィリエイトリンク";
-
-  const contents = [
-    {
-      title: "無料サンプルで雰囲気を確認しやすい作品まとめ",
-      description: "いきなり購入せず、まず公式ページで内容を確認したい人向け。初めてでも判断しやすいカテゴリです。",
-      reason: "無料サンプル確認を起点にできるため、購入前の不安を減らしやすい構成です。",
-      score: 89,
-      stars: "★★★★★",
-      tags: ["sample", "beginner"],
-      labels: ["無料サンプルあり", "初心者向け"],
-      poster: "p1",
-      posterLabel: "SAMPLE GUIDE",
-      affiliateUrl: DMM_MAIN_LINK,
-      sampleUrl: DMM_MAIN_LINK
-    },
-    {
-      title: "セール中から選びたい人向けコンテンツ",
-      description: "価格を抑えながら選びたい人向け。キャンペーンや割引情報の確認に向いています。",
-      reason: "セール対象を優先して探せるため、コスパ重視の人に向いています。",
-      score: 84,
-      stars: "★★★★☆",
-      tags: ["sale"],
-      labels: ["セール中", "価格重視"],
-      poster: "p2",
-      posterLabel: "SALE SELECT",
-      affiliateUrl: DMM_MAIN_LINK,
-      sampleUrl: DMM_MAIN_LINK
-    },
-    {
-      title: "月額見放題サービスを比較したい人向け",
-      description: "単品購入よりも、複数作品をまとめて確認したい人に向いている比較カテゴリです。",
-      reason: "見放題サービスは作品数・更新頻度・料金の比較が重要なため、候補整理に向いています。",
-      score: 87,
-      stars: "★★★★★",
-      tags: ["subscription", "beginner"],
-      labels: ["見放題", "比較向け"],
-      poster: "p3",
-      posterLabel: "SUBSCRIPTION",
-      affiliateUrl: DMM_MAIN_LINK,
-      sampleUrl: DMM_MAIN_LINK
-    },
-    {
-      title: "新着から注目作品を探す",
-      description: "新しく追加された作品やサービスを中心に確認したい人向けのカテゴリです。",
-      reason: "新着はトレンド性が高く、記事ネタにも使いやすいです。",
-      score: 82,
-      stars: "★★★★☆",
-      tags: ["new", "sample"],
-      labels: ["新着", "無料確認"],
-      poster: "p4",
-      posterLabel: "NEW ARRIVAL",
-      affiliateUrl: DMM_MAIN_LINK,
-      sampleUrl: DMM_MAIN_LINK
-    },
-    {
-      title: "初めての人でも選びやすい定番カテゴリ",
-      description: "何から見ればいいか分からない人向けに、確認しやすさを重視したカテゴリです。",
-      reason: "ジャンル選びで迷いやすい初心者でも、無料確認とスコアで候補を絞れます。",
-      score: 91,
-      stars: "★★★★★",
-      tags: ["beginner", "sample"],
-      labels: ["初心者向け", "定番"],
-      poster: "p2",
-      posterLabel: "BEGINNER",
-      affiliateUrl: DMM_MAIN_LINK,
-      sampleUrl: DMM_MAIN_LINK
-    },
-    {
-      title: "ランキング上位から選びたい人向け",
-      description: "迷ったときに人気順・注目度を参考にしたい人向けのまとめカテゴリです。",
-      reason: "ランキングは判断材料として使いやすく、購入前の候補選びに役立ちます。",
-      score: 85,
-      stars: "★★★★☆",
-      tags: ["sample", "sale"],
-      labels: ["ランキング", "注目"],
-      poster: "p1",
-      posterLabel: "RANKING",
-      affiliateUrl: DMM_MAIN_LINK,
-      sampleUrl: DMM_MAIN_LINK
+  <style>
+    :root {
+      --bg: #0b0b0d;
+      --text: #f5f1e8;
+      --muted: #a8a8a8;
+      --gold: #c9a45c;
+      --gold2: #f2d58a;
+      --red: #7a1f2b;
+      --line: rgba(255,255,255,0.08);
+      --line2: rgba(201,164,92,0.34);
+      --shadow: 0 24px 70px rgba(0,0,0,0.45);
+      --max: 1180px;
     }
-  ];
 
-  const ageModal = document.getElementById("ageModal");
-  const enterBtn = document.getElementById("enterBtn");
-  const exitBtn = document.getElementById("exitBtn");
-  const productGrid = document.getElementById("productGrid");
-  const filterButtons = document.querySelectorAll(".filter-btn");
-  const searchInput = document.getElementById("searchInput");
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-  let currentFilter = "all";
+    html {
+      scroll-behavior: smooth;
+    }
 
-  function checkAge() {
-    const verified = localStorage.getItem("asl_age_verified");
+    body {
+      font-family: "Hiragino Sans", "Yu Gothic", "Yu Gothic UI", system-ui, sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(201,164,92,0.16), transparent 35%),
+        radial-gradient(circle at top right, rgba(122,31,43,0.16), transparent 30%),
+        linear-gradient(180deg, #070708 0%, var(--bg) 45%, #060607 100%);
+      color: var(--text);
+      line-height: 1.8;
+      overflow-x: hidden;
+    }
 
-    if (verified === "yes") {
+    body.age-locked {
+      overflow: hidden;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .container {
+      width: min(var(--max), calc(100% - 40px));
+      margin: 0 auto;
+    }
+
+    .top-pr {
+      background: rgba(255,255,255,0.04);
+      border-bottom: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 12px;
+      text-align: center;
+      padding: 8px 16px;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(18px);
+      background: rgba(8,8,10,0.72);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .nav {
+      width: min(var(--max), calc(100% - 40px));
+      margin: 0 auto;
+      height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+    }
+
+    .logo-mark {
+      width: 38px;
+      height: 38px;
+      border-radius: 14px;
+      background: linear-gradient(145deg, var(--gold2), var(--red));
+      display: grid;
+      place-items: center;
+      color: #080808;
+      font-weight: 900;
+      box-shadow: 0 0 28px rgba(201,164,92,0.28);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .nav-links a:hover {
+      color: var(--gold2);
+    }
+
+    .nav-cta {
+      border: 1px solid var(--line2);
+      color: var(--gold2);
+      padding: 10px 16px;
+      border-radius: 999px;
+      background: rgba(201,164,92,0.08);
+    }
+
+    .hero {
+      padding: 88px 0 72px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 44px;
+      align-items: center;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid var(--line2);
+      background: rgba(201,164,92,0.08);
+      color: var(--gold2);
+      padding: 8px 14px;
+      border-radius: 999px;
+      font-size: 13px;
+      margin-bottom: 20px;
+    }
+
+    .badge-dot {
+      width: 7px;
+      height: 7px;
+      background: var(--gold);
+      border-radius: 999px;
+      box-shadow: 0 0 16px rgba(201,164,92,0.9);
+    }
+
+    h1 {
+      font-size: clamp(38px, 5vw, 76px);
+      line-height: 1.08;
+      letter-spacing: -0.05em;
+      margin-bottom: 22px;
+    }
+
+    h1 span {
+      color: var(--gold2);
+      text-shadow: 0 0 34px rgba(201,164,92,0.2);
+    }
+
+    .lead {
+      color: #d3d0ca;
+      font-size: 17px;
+      max-width: 660px;
+      margin-bottom: 30px;
+    }
+
+    .hero-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-bottom: 30px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 999px;
+      padding: 13px 20px;
+      font-weight: 700;
+      font-size: 14px;
+      transition: 0.25s ease;
+      cursor: pointer;
+      border: none;
+    }
+
+    .btn-primary {
+      color: #0b0b0d;
+      background: linear-gradient(135deg, var(--gold2), var(--gold));
+      box-shadow: 0 16px 34px rgba(201,164,92,0.22);
+    }
+
+    .btn-secondary {
+      color: var(--text);
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.05);
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .trust-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      max-width: 660px;
+    }
+
+    .trust-item {
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.035);
+      border-radius: 18px;
+      padding: 14px;
+    }
+
+    .trust-item strong {
+      display: block;
+      color: var(--gold2);
+      font-size: 18px;
+      line-height: 1.2;
+    }
+
+    .trust-item span {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .hero-panel {
+      border: 1px solid var(--line2);
+      background:
+        linear-gradient(145deg, rgba(255,255,255,0.07), rgba(255,255,255,0.025)),
+        radial-gradient(circle at top, rgba(201,164,92,0.2), transparent 45%);
+      border-radius: 34px;
+      padding: 22px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .panel-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 18px;
+    }
+
+    .panel-title {
+      font-weight: 800;
+      letter-spacing: 0.03em;
+    }
+
+    .panel-status {
+      font-size: 12px;
+      color: var(--gold2);
+      border: 1px solid var(--line2);
+      padding: 5px 10px;
+      border-radius: 999px;
+      background: rgba(201,164,92,0.08);
+    }
+
+    .mock-card {
+      border: 1px solid var(--line);
+      background: rgba(10,10,12,0.72);
+      border-radius: 26px;
+      overflow: hidden;
+      margin-bottom: 14px;
+    }
+
+    .mock-visual {
+      height: 220px;
+      background:
+        linear-gradient(135deg, rgba(201,164,92,0.34), rgba(122,31,43,0.35)),
+        radial-gradient(circle at 30% 20%, rgba(255,255,255,0.18), transparent 24%),
+        linear-gradient(120deg, #202027, #0c0c10);
+      position: relative;
+    }
+
+    .mock-visual::after {
+      content: "SAMPLE PREVIEW";
+      position: absolute;
+      left: 18px;
+      bottom: 16px;
+      color: rgba(255,255,255,0.72);
+      font-weight: 900;
+      letter-spacing: 0.12em;
+      font-size: 13px;
+    }
+
+    .mock-info {
+      padding: 18px;
+    }
+
+    .mock-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.04);
+      color: #d8d4cc;
+      padding: 4px 9px;
+      border-radius: 999px;
+      font-size: 11px;
+    }
+
+    .tag.gold {
+      color: var(--gold2);
+      border-color: var(--line2);
+      background: rgba(201,164,92,0.08);
+    }
+
+    .score-mini {
+      display: flex;
+      justify-content: space-between;
+      color: var(--muted);
+      font-size: 13px;
+      margin-top: 12px;
+    }
+
+    .score-bar {
+      margin-top: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.08);
+      overflow: hidden;
+    }
+
+    .score-bar span {
+      display: block;
+      height: 100%;
+      background: linear-gradient(90deg, var(--gold), var(--gold2));
+      border-radius: 999px;
+    }
+
+    .notice {
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.035);
+      border-radius: 22px;
+      padding: 18px;
+      color: var(--muted);
+      font-size: 13px;
+      margin-top: 24px;
+    }
+
+    section {
+      padding: 76px 0;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 24px;
+      margin-bottom: 28px;
+    }
+
+    .eyebrow {
+      color: var(--gold2);
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    h2 {
+      font-size: clamp(28px, 3vw, 46px);
+      line-height: 1.2;
+      letter-spacing: -0.04em;
+    }
+
+    .section-text {
+      color: var(--muted);
+      max-width: 600px;
+      font-size: 15px;
+    }
+
+    .reason-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .reason-card {
+      border: 1px solid var(--line);
+      background: linear-gradient(145deg, rgba(255,255,255,0.055), rgba(255,255,255,0.025));
+      border-radius: 24px;
+      padding: 24px;
+      min-height: 230px;
+      box-shadow: 0 14px 36px rgba(0,0,0,0.22);
+    }
+
+    .reason-num {
+      width: 38px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      border-radius: 14px;
+      background: rgba(201,164,92,0.11);
+      border: 1px solid var(--line2);
+      color: var(--gold2);
+      font-weight: 900;
+      margin-bottom: 18px;
+    }
+
+    .reason-card h3 {
+      font-size: 19px;
+      margin-bottom: 10px;
+    }
+
+    .reason-card p {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .score-section {
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.025), rgba(255,255,255,0)),
+        radial-gradient(circle at center, rgba(201,164,92,0.09), transparent 42%);
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .score-layout {
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 24px;
+      align-items: center;
+    }
+
+    .score-box {
+      border: 1px solid var(--line2);
+      background:
+        linear-gradient(145deg, rgba(201,164,92,0.1), rgba(255,255,255,0.035));
+      border-radius: 32px;
+      padding: 30px;
+      box-shadow: var(--shadow);
+    }
+
+    .big-score {
+      font-size: 62px;
+      font-weight: 950;
+      color: var(--gold2);
+      letter-spacing: -0.06em;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .score-label {
+      color: var(--muted);
+      margin-bottom: 20px;
+    }
+
+    .score-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .score-line {
+      display: grid;
+      grid-template-columns: 110px 1fr 40px;
+      gap: 12px;
+      align-items: center;
+      font-size: 13px;
+      color: #d9d4ca;
+    }
+
+    .bar {
+      height: 8px;
+      background: rgba(255,255,255,0.08);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .bar span {
+      display: block;
+      height: 100%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--gold), var(--gold2));
+    }
+
+    .tools {
+      margin-bottom: 22px;
+    }
+
+    .search-box {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255,255,255,0.05);
+      color: var(--text);
+      padding: 14px 18px;
+      outline: none;
+    }
+
+    .search-box:focus {
+      border-color: var(--line2);
+    }
+
+    .filter-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 26px;
+    }
+
+    .filter-btn {
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.04);
+      color: var(--muted);
+      padding: 10px 14px;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: 0.22s;
+    }
+
+    .filter-btn.active,
+    .filter-btn:hover {
+      color: #0b0b0d;
+      background: linear-gradient(135deg, var(--gold2), var(--gold));
+      border-color: transparent;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .product-card {
+      border: 1px solid var(--line);
+      background: linear-gradient(145deg, rgba(255,255,255,0.055), rgba(255,255,255,0.025));
+      border-radius: 26px;
+      overflow: hidden;
+      box-shadow: 0 16px 50px rgba(0,0,0,0.28);
+      transition: 0.25s ease;
+    }
+
+    .product-card:hover {
+      transform: translateY(-5px);
+      border-color: var(--line2);
+    }
+
+    .poster {
+      height: 220px;
+      position: relative;
+      overflow: hidden;
+      background:
+        linear-gradient(135deg, rgba(201,164,92,0.26), rgba(122,31,43,0.28)),
+        linear-gradient(120deg, #282831, #101014);
+    }
+
+    .poster::before {
+      content: "";
+      position: absolute;
+      inset: 24px;
+      border: 1px solid rgba(255,255,255,0.13);
+      border-radius: 22px;
+      background:
+        radial-gradient(circle at 50% 30%, rgba(255,255,255,0.14), transparent 26%),
+        linear-gradient(145deg, rgba(255,255,255,0.08), rgba(0,0,0,0.08));
+    }
+
+    .poster::after {
+      content: attr(data-label);
+      position: absolute;
+      left: 18px;
+      bottom: 16px;
+      font-size: 12px;
+      color: rgba(255,255,255,0.72);
+      font-weight: 900;
+      letter-spacing: 0.12em;
+    }
+
+    .poster.p2 {
+      background:
+        linear-gradient(135deg, rgba(116,93,191,0.28), rgba(201,164,92,0.22)),
+        linear-gradient(120deg, #24242e, #0e0e13);
+    }
+
+    .poster.p3 {
+      background:
+        linear-gradient(135deg, rgba(122,31,43,0.34), rgba(201,164,92,0.2)),
+        linear-gradient(120deg, #2a2024, #0f0c0d);
+    }
+
+    .poster.p4 {
+      background:
+        linear-gradient(135deg, rgba(201,164,92,0.28), rgba(50,50,58,0.34)),
+        linear-gradient(120deg, #292722, #10100e);
+    }
+
+    .product-body {
+      padding: 20px;
+    }
+
+    .product-body h3 {
+      font-size: 18px;
+      line-height: 1.45;
+      margin: 12px 0 8px;
+    }
+
+    .product-body p {
+      color: var(--muted);
+      font-size: 13px;
+      margin-bottom: 14px;
+    }
+
+    .product-score {
+      border: 1px solid var(--line);
+      background: rgba(0,0,0,0.22);
+      border-radius: 18px;
+      padding: 12px;
+      margin: 14px 0;
+    }
+
+    .product-score-top {
+      display: flex;
+      justify-content: space-between;
+      color: var(--gold2);
+      font-weight: 800;
+      font-size: 13px;
+      margin-bottom: 8px;
+    }
+
+    .stars {
+      color: var(--gold2);
+      letter-spacing: 1px;
+      font-size: 12px;
+    }
+
+    .card-actions {
+      display: grid;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .card-actions a,
+    .card-actions button {
+      text-align: center;
+      border-radius: 999px;
+      padding: 11px 14px;
+      font-weight: 800;
+      font-size: 13px;
+      border: none;
+      cursor: pointer;
+      font-family: inherit;
+    }
+
+    .official {
+      color: #0b0b0d;
+      background: linear-gradient(135deg, var(--gold2), var(--gold));
+    }
+
+    .sample {
+      color: var(--gold2);
+      border: 1px solid var(--line2) !important;
+      background: rgba(201,164,92,0.08);
+    }
+
+    .guide-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .guide-card {
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.035);
+      border-radius: 26px;
+      padding: 24px;
+    }
+
+    .guide-card h3 {
+      margin-bottom: 10px;
+    }
+
+    .guide-card ul {
+      padding-left: 20px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .cta {
+      padding: 84px 0;
+    }
+
+    .cta-box {
+      border: 1px solid var(--line2);
+      background:
+        radial-gradient(circle at top left, rgba(201,164,92,0.16), transparent 35%),
+        linear-gradient(145deg, rgba(255,255,255,0.07), rgba(255,255,255,0.025));
+      border-radius: 34px;
+      padding: 42px;
+      text-align: center;
+      box-shadow: var(--shadow);
+    }
+
+    .cta-box p {
+      color: var(--muted);
+      max-width: 700px;
+      margin: 14px auto 26px;
+    }
+
+    footer {
+      border-top: 1px solid var(--line);
+      padding: 38px 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 20px;
+      align-items: center;
+    }
+
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .footer-links a:hover {
+      color: var(--gold2);
+    }
+
+    .age-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 999;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      background:
+        radial-gradient(circle at center, rgba(201,164,92,0.14), transparent 30%),
+        rgba(0,0,0,0.88);
+      backdrop-filter: blur(18px);
+      padding: 20px;
+    }
+
+    .age-modal.show {
+      display: flex;
+    }
+
+    .age-box {
+      width: min(560px, 100%);
+      border: 1px solid var(--line2);
+      background:
+        linear-gradient(145deg, rgba(28,28,34,0.98), rgba(8,8,10,0.98));
+      border-radius: 32px;
+      padding: 34px;
+      box-shadow: 0 30px 90px rgba(0,0,0,0.65);
+      text-align: center;
+    }
+
+    .age-box h2 {
+      font-size: 30px;
+      margin-bottom: 12px;
+    }
+
+    .age-box p {
+      color: var(--muted);
+      margin-bottom: 24px;
+    }
+
+    .age-actions {
+      display: grid;
+      gap: 12px;
+    }
+
+    @media (max-width: 920px) {
+      .hero-grid,
+      .score-layout,
+      .guide-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .reason-grid,
+      .grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .nav-links {
+        display: none;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .container,
+      .nav {
+        width: min(100% - 28px, var(--max));
+      }
+
+      .hero {
+        padding-top: 54px;
+      }
+
+      .trust-row,
+      .reason-grid,
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      .section-head {
+        display: block;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .cta-box {
+        padding: 28px 20px;
+      }
+    }
+  </style>
+</head>
+
+<body class="age-locked">
+
+  <div class="top-pr">
+    当サイトはアフィリエイト広告を利用しています。18歳以上の方のみご利用ください。
+  </div>
+
+  <header>
+    <nav class="nav">
+      <a href="./" class="logo">
+        <span class="logo-mark">A</span>
+        <span>Adult Select Lab</span>
+      </a>
+
+      <div class="nav-links">
+        <a href="#reason">このサイトの強み</a>
+        <a href="#score">独自スコア</a>
+        <a href="#contents">無料サンプル</a>
+        <a href="#guide">選び方</a>
+        <a href="#contents" class="nav-cta">探してみる</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <div class="badge">
+            <span class="badge-dot"></span>
+            18+ Adult Content Select Guide
+          </div>
+
+          <h1>
+            大人向けコンテンツを、<br />
+            <span>失敗しにくく選ぶ。</span>
+          </h1>
+
+          <p class="lead">
+            無料サンプル・ジャンル・ランキング・セール情報から、
+            自分に合う作品やサービスを探せる比較ナビ。
+            いきなり購入せず、まずは公式ページで内容を確認できます。
+          </p>
+
+          <div class="hero-buttons">
+            <a href="#contents" class="btn btn-primary">無料サンプルから探す</a>
+            <a href="#reason" class="btn btn-secondary">このサイトを使う理由</a>
+          </div>
+
+          <div class="trust-row">
+            <div class="trust-item">
+              <strong>Sample</strong>
+              <span>無料確認を重視</span>
+            </div>
+            <div class="trust-item">
+              <strong>Score</strong>
+              <span>独自基準で比較</span>
+            </div>
+            <div class="trust-item">
+              <strong>Official</strong>
+              <span>最後は公式で確認</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-panel">
+          <div class="panel-top">
+            <div class="panel-title">Select Preview</div>
+            <div class="panel-status">公式確認型</div>
+          </div>
+
+          <div class="mock-card">
+            <div class="mock-visual"></div>
+            <div class="mock-info">
+              <div class="mock-tags">
+                <span class="tag gold">無料サンプルあり</span>
+                <span class="tag">セール確認</span>
+                <span class="tag">初心者向け</span>
+              </div>
+
+              <h3>購入前に、まず内容を確認。</h3>
+              <p style="color: var(--muted); font-size: 13px;">
+                気になる作品・サービスを、ジャンル・特徴・独自スコアで整理してから公式ページへ進めます。
+              </p>
+
+              <div class="score-mini">
+                <span>Adult Select Score</span>
+                <strong style="color: var(--gold2);">86 / 100</strong>
+              </div>
+              <div class="score-bar"><span style="width:86%;"></span></div>
+            </div>
+          </div>
+
+          <div class="notice">
+            価格・配信状況・キャンペーンは変更される場合があります。購入・登録前に必ず公式ページで最新情報をご確認ください。
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="reason">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <div class="eyebrow">Why this site</div>
+            <h2>このサイトで選ぶ理由</h2>
+          </div>
+          <p class="section-text">
+            ただ作品を並べるのではなく、購入前に迷いを減らすための判断材料を整理します。
+          </p>
+        </div>
+
+        <div class="reason-grid">
+          <div class="reason-card">
+            <div class="reason-num">01</div>
+            <h3>いきなり購入をすすめない</h3>
+            <p>まずは無料サンプルや公式ページで内容を確認。納得できるものだけ選べる導線にしています。</p>
+          </div>
+
+          <div class="reason-card">
+            <div class="reason-num">02</div>
+            <h3>目的別に探せる</h3>
+            <p>無料サンプル、セール中、見放題、初心者向けなど、自分の目的に合わせて候補を絞れます。</p>
+          </div>
+
+          <div class="reason-card">
+            <div class="reason-num">03</div>
+            <h3>独自スコアで比較</h3>
+            <p>サンプル確認のしやすさ、選びやすさ、価格納得感などを独自基準で見える化します。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="score" class="score-section">
+      <div class="container score-layout">
+        <div>
+          <div class="eyebrow">Adult Select Score</div>
+          <h2>選びやすさを、見える化。</h2>
+          <p class="section-text" style="margin-top: 14px;">
+            作品やサービスをただ紹介するだけではなく、購入前に確認したいポイントをスコア化。
+            「なぜおすすめなのか」が分かるように設計しています。
+          </p>
+        </div>
+
+        <div class="score-box">
+          <div class="big-score">86</div>
+          <div class="score-label">Adult Select Score / 100</div>
+
+          <div class="score-list">
+            <div class="score-line">
+              <span>Sample</span>
+              <div class="bar"><span style="width: 92%;"></span></div>
+              <strong>92</strong>
+            </div>
+            <div class="score-line">
+              <span>Select</span>
+              <div class="bar"><span style="width: 86%;"></span></div>
+              <strong>86</strong>
+            </div>
+            <div class="score-line">
+              <span>Price</span>
+              <div class="bar"><span style="width: 80%;"></span></div>
+              <strong>80</strong>
+            </div>
+            <div class="score-line">
+              <span>Trend</span>
+              <div class="bar"><span style="width: 88%;"></span></div>
+              <strong>88</strong>
+            </div>
+            <div class="score-line">
+              <span>Beginner</span>
+              <div class="bar"><span style="width: 90%;"></span></div>
+              <strong>90</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contents">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <div class="eyebrow">Select Contents</div>
+            <h2>無料サンプル・ジャンル別に探す</h2>
+          </div>
+          <p class="section-text">
+            現在は承認前のため、リンクは準備中です。承認後、公式アフィリエイトリンクを設定します。
+          </p>
+        </div>
+
+        <div class="tools">
+          <input id="searchInput" class="search-box" type="search" placeholder="キーワードで探す：無料サンプル、見放題、セール、初心者向け など" />
+        </div>
+
+        <div class="filter-row">
+          <button class="filter-btn active" data-filter="all">すべて</button>
+          <button class="filter-btn" data-filter="sample">無料サンプル</button>
+          <button class="filter-btn" data-filter="sale">セール中</button>
+          <button class="filter-btn" data-filter="subscription">見放題</button>
+          <button class="filter-btn" data-filter="beginner">初心者向け</button>
+          <button class="filter-btn" data-filter="new">新着</button>
+        </div>
+
+        <div id="productGrid" class="grid"></div>
+      </div>
+    </section>
+
+    <section id="guide">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <div class="eyebrow">Guide</div>
+            <h2>失敗しにくい選び方</h2>
+          </div>
+          <p class="section-text">
+            購入前に確認するべきポイントを整理しておくことで、無駄な購入を減らしやすくなります。
+          </p>
+        </div>
+
+        <div class="guide-grid">
+          <div class="guide-card">
+            <h3>まず確認すること</h3>
+            <ul>
+              <li>無料サンプルがあるか</li>
+              <li>ジャンルが自分に合っているか</li>
+              <li>価格やキャンペーン条件</li>
+              <li>単品購入か見放題か</li>
+              <li>公式ページの最新情報</li>
+            </ul>
+          </div>
+
+          <div class="guide-card">
+            <h3>このサイトの使い方</h3>
+            <ul>
+              <li>気になるカテゴリを選ぶ</li>
+              <li>Adult Select Scoreを見る</li>
+              <li>無料サンプルや特徴を確認</li>
+              <li>気になったものだけ公式ページへ</li>
+              <li>納得できた場合のみ購入・登録</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta">
+      <div class="container">
+        <div class="cta-box">
+          <div class="eyebrow">Official Check</div>
+          <h2>気になるものは、まず公式ページで確認。</h2>
+          <p>
+            価格・配信状況・キャンペーン内容は変更される場合があります。
+            このサイトで候補を絞ったあと、最終的な内容は必ず公式ページで確認してください。
+          </p>
+          <a href="#contents" class="btn btn-primary">無料サンプルから探す</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-grid">
+      <div>
+        <strong style="color: var(--text);">Adult Select Lab</strong><br />
+        当サイトはアフィリエイト広告を利用しています。18歳以上の方のみご利用ください。
+      </div>
+
+      <div class="footer-links">
+        <a href="operator.html">運営者情報</a>
+        <a href="privacy.html">プライバシーポリシー</a>
+        <a href="disclaimer.html">免責事項</a>
+        <a href="contact.html">お問い合わせ</a>
+      </div>
+    </div>
+  </footer>
+
+  <div id="ageModal" class="age-modal">
+    <div class="age-box">
+      <div class="badge" style="margin-left:auto; margin-right:auto;">
+        <span class="badge-dot"></span>
+        Age Verification
+      </div>
+
+      <h2>18歳以上ですか？</h2>
+      <p>
+        このサイトには成人向けコンテンツへのリンクが含まれます。
+        18歳未満の方はご利用いただけません。
+      </p>
+
+      <div class="age-actions">
+        <button id="enterBtn" class="btn btn-primary">18歳以上です。サイトに入る</button>
+        <button id="exitBtn" class="btn btn-secondary">退出する</button>
+      </div>
+
+      <div class="notice">
+        当サイトは作品・サービスの選び方を整理する比較ナビです。
+        購入・登録前には必ず公式ページで最新情報をご確認ください。
+      </div>
+    </div>
+  </div>
+
+  <script>
+    /*
+      承認前用：
+      現在はリンク未設定です。
+      ボタンを押すと「リンク準備中」の案内が出ます。
+
+      承認後は下の DMM_MAIN_LINK に
+      DMM/FANZAアフィリエイトリンクを入れるだけで全カードに反映されます。
+    */
+
+    const DMM_MAIN_LINK = "";
+
+    const contents = [
+      {
+        title: "無料サンプルで雰囲気を確認しやすい作品まとめ",
+        description: "いきなり購入せず、まず公式ページで内容を確認したい人向け。初めてでも判断しやすいカテゴリです。",
+        reason: "無料サンプル確認を起点にできるため、購入前の不安を減らしやすい構成です。",
+        score: 89,
+        stars: "★★★★★",
+        tags: ["sample", "beginner"],
+        labels: ["無料サンプルあり", "初心者向け"],
+        poster: "p1",
+        posterLabel: "SAMPLE GUIDE",
+        affiliateUrl: DMM_MAIN_LINK,
+        sampleUrl: DMM_MAIN_LINK
+      },
+      {
+        title: "セール中から選びたい人向けコンテンツ",
+        description: "価格を抑えながら選びたい人向け。キャンペーンや割引情報の確認に向いています。",
+        reason: "セール対象を優先して探せるため、コスパ重視の人に向いています。",
+        score: 84,
+        stars: "★★★★☆",
+        tags: ["sale"],
+        labels: ["セール中", "価格重視"],
+        poster: "p2",
+        posterLabel: "SALE SELECT",
+        affiliateUrl: DMM_MAIN_LINK,
+        sampleUrl: DMM_MAIN_LINK
+      },
+      {
+        title: "月額見放題サービスを比較したい人向け",
+        description: "単品購入よりも、複数作品をまとめて確認したい人に向いている比較カテゴリです。",
+        reason: "見放題サービスは作品数・更新頻度・料金の比較が重要なため、候補整理に向いています。",
+        score: 87,
+        stars: "★★★★★",
+        tags: ["subscription", "beginner"],
+        labels: ["見放題", "比較向け"],
+        poster: "p3",
+        posterLabel: "SUBSCRIPTION",
+        affiliateUrl: DMM_MAIN_LINK,
+        sampleUrl: DMM_MAIN_LINK
+      },
+      {
+        title: "新着から注目作品を探す",
+        description: "新しく追加された作品やサービスを中心に確認したい人向けのカテゴリです。",
+        reason: "新着はトレンド性が高く、記事ネタにも使いやすいです。",
+        score: 82,
+        stars: "★★★★☆",
+        tags: ["new", "sample"],
+        labels: ["新着", "無料確認"],
+        poster: "p4",
+        posterLabel: "NEW ARRIVAL",
+        affiliateUrl: DMM_MAIN_LINK,
+        sampleUrl: DMM_MAIN_LINK
+      },
+      {
+        title: "初めての人でも選びやすい定番カテゴリ",
+        description: "何から見ればいいか分からない人向けに、確認しやすさを重視したカテゴリです。",
+        reason: "ジャンル選びで迷いやすい初心者でも、無料確認とスコアで候補を絞れます。",
+        score: 91,
+        stars: "★★★★★",
+        tags: ["beginner", "sample"],
+        labels: ["初心者向け", "定番"],
+        poster: "p2",
+        posterLabel: "BEGINNER",
+        affiliateUrl: DMM_MAIN_LINK,
+        sampleUrl: DMM_MAIN_LINK
+      },
+      {
+        title: "ランキング上位から選びたい人向け",
+        description: "迷ったときに人気順・注目度を参考にしたい人向けのまとめカテゴリです。",
+        reason: "ランキングは判断材料として使いやすく、購入前の候補選びに役立ちます。",
+        score: 85,
+        stars: "★★★★☆",
+        tags: ["sample", "sale"],
+        labels: ["ランキング", "注目"],
+        poster: "p1",
+        posterLabel: "RANKING",
+        affiliateUrl: DMM_MAIN_LINK,
+        sampleUrl: DMM_MAIN_LINK
+      }
+    ];
+
+    const ageModal = document.getElementById("ageModal");
+    const enterBtn = document.getElementById("enterBtn");
+    const exitBtn = document.getElementById("exitBtn");
+    const productGrid = document.getElementById("productGrid");
+    const filterButtons = document.querySelectorAll(".filter-btn");
+    const searchInput = document.getElementById("searchInput");
+
+    let currentFilter = "all";
+
+    function checkAge() {
+      const verified = localStorage.getItem("asl_age_verified");
+
+      if (verified === "yes") {
+        document.body.classList.remove("age-locked");
+        ageModal.classList.remove("show");
+      } else {
+        document.body.classList.add("age-locked");
+        ageModal.classList.add("show");
+      }
+    }
+
+    enterBtn.addEventListener("click", () => {
+      localStorage.setItem("asl_age_verified", "yes");
       document.body.classList.remove("age-locked");
       ageModal.classList.remove("show");
-    } else {
-      document.body.classList.add("age-locked");
-      ageModal.classList.add("show");
-    }
-  }
-
-  enterBtn.addEventListener("click", () => {
-    localStorage.setItem("asl_age_verified", "yes");
-    document.body.classList.remove("age-locked");
-    ageModal.classList.remove("show");
-  });
-
-  exitBtn.addEventListener("click", () => {
-    window.location.href = "https://www.google.com/";
-  });
-
-  function openAffiliateLink(url) {
-    if (!url || url.trim() === "") {
-      alert("現在リンク準備中です。DMM/FANZAの承認後、公式リンクを設定します。");
-      return;
-    }
-
-    window.open(url, "_blank", "noopener,noreferrer");
-  }
-
-  function renderProducts() {
-    const keyword = searchInput.value.trim().toLowerCase();
-
-    const filtered = contents.filter(item => {
-      const matchFilter = currentFilter === "all" || item.tags.includes(currentFilter);
-
-      const searchableText = [
-        item.title,
-        item.description,
-        item.reason,
-        item.labels.join(" "),
-        item.tags.join(" ")
-      ].join(" ").toLowerCase();
-
-      const matchKeyword = keyword === "" || searchableText.includes(keyword);
-
-      return matchFilter && matchKeyword;
     });
 
-    if (filtered.length === 0) {
-      productGrid.innerHTML = `
-        <div class="guide-card" style="grid-column: 1 / -1;">
-          <h3>該当するコンテンツが見つかりませんでした</h3>
-          <p style="color: var(--muted); font-size: 14px;">
-            キーワードやカテゴリを変えて再検索してください。
-          </p>
-        </div>
-      `;
-      return;
+    exitBtn.addEventListener("click", () => {
+      window.location.href = "https://www.google.com/";
+    });
+
+    function openAffiliateLink(url) {
+      if (!url || url.trim() === "") {
+        alert("現在リンク準備中です。承認後、公式ページへのリンクを設定します。");
+        return;
+      }
+
+      window.open(url, "_blank", "noopener,noreferrer");
     }
 
-    productGrid.innerHTML = filtered.map((item, index) => `
-      <article class="product-card">
-        <div class="poster ${item.poster}" data-label="${item.posterLabel}"></div>
+    function renderProducts() {
+      const keyword = searchInput.value.trim().toLowerCase();
 
-        <div class="product-body">
-          <div class="mock-tags">
-            ${item.labels.map(label => `<span class="tag gold">${label}</span>`).join("")}
+      const filtered = contents.filter(item => {
+        const matchFilter = currentFilter === "all" || item.tags.includes(currentFilter);
+
+        const searchableText = [
+          item.title,
+          item.description,
+          item.reason,
+          item.labels.join(" "),
+          item.tags.join(" ")
+        ].join(" ").toLowerCase();
+
+        const matchKeyword = keyword === "" || searchableText.includes(keyword);
+
+        return matchFilter && matchKeyword;
+      });
+
+      if (filtered.length === 0) {
+        productGrid.innerHTML = `
+          <div class="guide-card" style="grid-column: 1 / -1;">
+            <h3>該当するコンテンツが見つかりませんでした</h3>
+            <p style="color: var(--muted); font-size: 14px;">
+              キーワードやカテゴリを変えて再検索してください。
+            </p>
           </div>
+        `;
+        return;
+      }
 
-          <h3>${item.title}</h3>
-          <p>${item.description}</p>
+      productGrid.innerHTML = filtered.map((item, index) => `
+        <article class="product-card">
+          <div class="poster ${item.poster}" data-label="${item.posterLabel}"></div>
 
-          <div class="product-score">
-            <div class="product-score-top">
-              <span>Adult Select Score</span>
-              <span>${item.score} / 100</span>
+          <div class="product-body">
+            <div class="mock-tags">
+              ${item.labels.map(label => `<span class="tag gold">${label}</span>`).join("")}
             </div>
-            <div class="score-bar">
-              <span style="width: ${item.score}%;"></span>
+
+            <h3>${item.title}</h3>
+            <p>${item.description}</p>
+
+            <div class="product-score">
+              <div class="product-score-top">
+                <span>Adult Select Score</span>
+                <span>${item.score} / 100</span>
+              </div>
+              <div class="score-bar"><span style="width: ${item.score}%;"></span></div>
+              <div style="margin-top: 8px;" class="stars">${item.stars}</div>
             </div>
-            <div style="margin-top: 8px;" class="stars">${item.stars}</div>
+
+            <p>
+              <strong style="color: var(--text);">このカテゴリを選ぶ理由：</strong><br />
+              ${item.reason}
+            </p>
+
+            <div class="card-actions">
+              <button class="official" type="button" onclick="openAffiliateLink(contents[${index}].affiliateUrl)">
+                公式ページで詳細を見る
+              </button>
+              <button class="sample" type="button" onclick="openAffiliateLink(contents[${index}].sampleUrl)">
+                無料サンプルを確認する
+              </button>
+            </div>
           </div>
+        </article>
+      `).join("");
+    }
 
-          <p>
-            <strong style="color: var(--text);">このカテゴリを選ぶ理由：</strong><br />
-            ${item.reason}
-          </p>
-
-          <div class="card-actions">
-            <button class="official" type="button" onclick="openAffiliateLink(contents[${index}].affiliateUrl)">
-              公式ページで詳細を見る
-            </button>
-            <button class="sample" type="button" onclick="openAffiliateLink(contents[${index}].sampleUrl)">
-              無料サンプルを確認する
-            </button>
-          </div>
-        </div>
-      </article>
-    `).join("");
-  }
-
-  filterButtons.forEach(button => {
-    button.addEventListener("click", () => {
-      filterButtons.forEach(btn => btn.classList.remove("active"));
-      button.classList.add("active");
-      currentFilter = button.dataset.filter;
-      renderProducts();
+    filterButtons.forEach(button => {
+      button.addEventListener("click", () => {
+        filterButtons.forEach(btn => btn.classList.remove("active"));
+        button.classList.add("active");
+        currentFilter = button.dataset.filter;
+        renderProducts();
+      });
     });
-  });
 
-  searchInput.addEventListener("input", renderProducts);
+    searchInput.addEventListener("input", renderProducts);
 
-  checkAge();
-  renderProducts();
-</script>
+    checkAge();
+    renderProducts();
+  </script>
+</body>
+</html>
